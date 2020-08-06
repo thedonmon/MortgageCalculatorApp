@@ -1,9 +1,10 @@
 import axios from 'axios'
 
-const BASE = 'api/calculator'
+const BASE = 'https://mortgagecalculator20200805210321.azurewebsites.net'
+const API = 'api/calculator'
 
 const urls = {
-  calculate: `${BASE}/calculateMortgage`
+  calculate: `${BASE}/${API}/calculateMortgage`
 }
 
 export const MortgageCalculatorService = {

@@ -35,14 +35,15 @@ export const mapCalculateMortgageRequest = ({
 export const mapCalculateMortgageResponse = ({
   mortgage,
   property_taxes,
-  home_insurance,
-  utilities_cost,
-  association_dues,
+  homeInsurance,
+  utilitiesCost,
+  associationDues,
   total
 }) => ({
   mortgage,
   propertyTaxes: property_taxes,
-  homeInsurance: home_insurance,
-  utilitiesCost: utilities_cost,
-  associationDues: association_dues
+  homeInsurance,
+  utilitiesCost,
+  associationDues,
+  total
 })

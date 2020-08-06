@@ -9,23 +9,23 @@
       <md-field>
         <label>Purchase Price</label>
         <span class="md-prefix">$</span>
-        <md-input v-model="purchasePrice"></md-input>
+        <md-input v-model.number="purchasePrice"></md-input>
       </md-field>
       <md-field>
         <label>Down Payment Percentage</label>
-        <md-input v-model="downPaymentPercentage"></md-input>
+        <md-input v-model.number="downPaymentPercentage"></md-input>
         <span class="md-suffix">%</span>
       </md-field>
 
       <!-- MORTGAGE -->
       <md-field>
         <label>Interest Rate</label>
-        <md-input v-model="interestRate"></md-input>
+        <md-input v-model.number="interestRate"></md-input>
         <span class="md-suffix">%</span>
       </md-field>
       <md-field>
         <label>Loan Amortization Term</label>
-        <md-input v-model="loanTerm"></md-input>
+        <md-input v-model.number="loanTerm"></md-input>
         <span class="md-suffix">mo</span>
       </md-field>
 
@@ -33,18 +33,18 @@
       <md-field>
         <label>Property Taxes</label>
         <span class="md-prefix">$</span>
-        <md-input v-model="propertyTaxes"></md-input>
+        <md-input v-model.number="propertyTaxes"></md-input>
       </md-field>
       <md-field>
         <label>Home Insurance</label>
         <span class="md-prefix">$</span>
-        <md-input v-model="homeInsuranceAnnual"></md-input>
+        <md-input v-model.number="homeInsuranceAnnual"></md-input>
         <span class="md-suffix">/yr</span>
       </md-field>
       <md-field>
         <label>HOA Dues</label>
         <span class="md-prefix">$</span>
-        <md-input v-model="hoaDues"></md-input>
+        <md-input v-model.number="hoaDues"></md-input>
         <span class="md-suffix">/mo</span>
       </md-field>
 
@@ -66,7 +66,7 @@
                 <md-field>
                   <label>Cost</label>
                   <span class="md-prefix">$</span>
-                  <md-input v-model="utility.cost"></md-input>
+                  <md-input v-model.number="utility.cost"></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-size-10 md-small-size-100 md-layout md-alignment-center-right">
@@ -107,7 +107,7 @@
 <script>
 import MortgageResult from '@/components/charts/mortgage/Result.vue'
 
-import { mapCalculateMortgageRequest } from '@/mappers/calculators/mortgage'
+import { mapCalculateMortgageRequest, mapCalculateMortgageResponse } from '@/mappers/calculators/mortgage'
 import { MortgageCalculatorService } from '@/services/calculators/mortgage'
 
 export default {
@@ -174,7 +174,8 @@ export default {
       }
       try {
         const res = await MortgageCalculatorService.calculate(mapCalculateMortgageRequest(request))
-        this.results = mapCalculateMortgageResponse(res)
+        const mapped = mapCalculateMortgageResponse(res.data.data)
+        this.results = mapped
       } catch (ex) {
         console.log(ex)
       }
