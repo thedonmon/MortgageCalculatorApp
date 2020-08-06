@@ -1,5 +1,19 @@
 <template>
-  <div id="mortgage-result"></div>
+  <!-- <div id="mortgage-result"></div> -->
+  <div class="mortgage-result">
+      <p class="label">Mortgage: </p>
+      <p class="cost">{{ mortgage }}</p>
+      <p class="label">Property Taxes: </p>
+      <p class="cost">{{ propertyTaxes }}</p>
+      <p class="label">Home Insurance: </p>
+      <p class="cost">{{ homeInsurance }}</p>
+      <p class="label">Utilities Cost: </p>
+      <p class="cost">{{ utilitiesCost }}</p>
+      <p class="label">Association Dues: </p>
+      <p class="cost">{{ associationDues }}</p>
+      <p class="label">Total: </p>
+      <p class="cost">{{ total }}</p>
+  </div>
 </template>
 
 <script>
@@ -29,13 +43,17 @@ export default {
     associationDues: {
       type: Number,
       required: true
+    },
+    total: {
+      type: Number,
+      required: true
     }
   },
   data: () => ({}),
   created () {},
   mounted () {
     const data = {
-      total: 1000000000,
+      total: this.total,
       breakdown: [
         this.createDataPoint('mortgage', 'Mortgage'),
         this.createDataPoint('propertyTaxes', 'Property Taxes'),
@@ -44,7 +62,7 @@ export default {
         this.createDataPoint('associationDues', 'Association Dues')
       ]
     }
-    createChart(this.$el, data)
+    // createChart(this.$el, data)
   },
   updated () {},
   destroyed () {},
@@ -82,6 +100,17 @@ svg {
 }
 .cost {
   font-weight: 600;
+}
+
+
+.mortgage-result {
+  padding: 1rem 5rem;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-gap: 1rem;
+  p {
+    margin: 0;
+  }
 }
 
 // /*Styling for the lines connecting the labels to the slices*/

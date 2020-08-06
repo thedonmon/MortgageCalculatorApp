@@ -98,6 +98,7 @@
           :homeInsurance="results.homeInsurance"
           :utilitiesCost="results.utilitiesCost"
           :associationDues="results.associationDues"
+          :total="results.total"
         />
       </div>
     </div>
