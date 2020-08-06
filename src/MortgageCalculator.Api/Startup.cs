@@ -33,8 +33,7 @@ namespace MortgageCalculator.Api
             services.AddScoped<ICalculator, MortgagePropertyCalculator>();
             services.AddCors(x => x.AddDefaultPolicy(builder =>
             {
-                builder.WithOrigins("http://localhost:8080/",
-                                    "http://www.contoso.com");
+                builder.WithOrigins("*");
             }));
         }
 
