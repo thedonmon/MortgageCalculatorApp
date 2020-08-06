@@ -7,7 +7,6 @@ using Microsoft.Extensions.Hosting;
 using MotgageCalculator.Domain.Calculators.Implementation;
 using MotgageCalculator.Domain.Calculators.Interface;
 using MotgageCalculator.Domain.Factory;
-using VueCliMiddleware;
 
 namespace MortgageCalculator
 {
@@ -23,16 +22,16 @@ namespace MortgageCalculator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
+            //services.AddControllersWithViews();
+            services.AddControllers();
             // Add AddRazorPages if the app uses Razor Pages.
-            services.AddRazorPages();
+           // services.AddRazorPages();
 
             // In production, the Vue files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/dist";
+            //});
             services.AddSingleton<ICalculatorFactory, CalcualtorFactory>();
             services.AddScoped<ICalculator, MortgagePropertyCalculator>();
 
@@ -54,7 +53,7 @@ namespace MortgageCalculator
             }
 
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            //app.UseSpaStaticFiles();
 
             app.UseRouting();
 
@@ -64,23 +63,23 @@ namespace MortgageCalculator
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
 
-                if (env.IsDevelopment())
-                {
-                    endpoints.MapToVueCliProxy(
-                        "{*path}",
-                        new SpaOptions { SourcePath = "ClientApp" },
-                        npmScript: "serve",
-                        regex: "Compiled successfully");
-                }
+                //if (env.IsDevelopment())
+                //{
+                //    endpoints.MapToVueCliProxy(
+                //        "{*path}",
+                //        new SpaOptions { SourcePath = "ClientApp" },
+                //        npmScript: "serve",
+                //        regex: "Compiled successfully");
+                //}
 
-                // Add MapRazorPages if the app uses Razor Pages. Since Endpoint Routing includes support for many frameworks, adding Razor Pages is now opt -in.
-                endpoints.MapRazorPages();
+                //// Add MapRazorPages if the app uses Razor Pages. Since Endpoint Routing includes support for many frameworks, adding Razor Pages is now opt -in.
+                //endpoints.MapRazorPages();
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-            });
+            //app.UseSpa(spa =>
+            //{
+            //    spa.Options.SourcePath = "ClientApp";
+            //});
         }
     }
 }
