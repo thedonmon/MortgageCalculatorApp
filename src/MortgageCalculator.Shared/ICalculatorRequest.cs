@@ -6,6 +6,5 @@ namespace MortgageCalculator.Shared
 {
     public interface ICalculatorRequest
     {
-        Guid RequestId { get; }
     }
 }

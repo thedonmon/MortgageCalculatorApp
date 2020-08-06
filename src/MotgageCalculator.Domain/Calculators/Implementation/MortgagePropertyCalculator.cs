@@ -42,14 +42,20 @@ namespace MotgageCalculator.Domain.Calculators.Implementation
             var model = new MortgageCalculationModel();
             var rate = (double)m.InterestRate / 100 / 12;
 
-            var principal = -FinancialFunctions.PPMT(rate, 1, m.LoanAmortizationTerm, p.LoanAmount, 0, 0);
-            var interestPayment = -FinancialFunctions.IPMT(rate, 1, m.LoanAmortizationTerm, p.LoanAmount, 0, 0);
+            var principal = -FinancialFunctions.PPMT(rate, 1, m.LoanAmortizationTerm, 10000, 0, 0);
+            //var principal = -FinancialFunctions.PPMT(rate, 1, m.LoanAmortizationTerm, p.LoanAmount, 0, 0);
+
+            var interestPayment = -FinancialFunctions.IPMT(rate, 1, m.LoanAmortizationTerm, 10000, 0, 0);
+            //var interestPayment = -FinancialFunctions.IPMT(rate, 1, m.LoanAmortizationTerm, p.LoanAmount, 0, 0);
+
 
             model.Interest = interestPayment;
             model.Principle = principal;
             if (p.DownPaymentPercentage < 20)
             {
-                model.PMI = (p.LoanAmount * ((0.4) / 100)) / 12;
+                model.PMI = (10000 * ((0.4) / 100)) / 12;
+                //model.PMI = (p.LoanAmount * ((0.4) / 100)) / 12;
+
                 return model;
             }
 

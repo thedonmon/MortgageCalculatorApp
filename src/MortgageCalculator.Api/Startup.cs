@@ -1,13 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using MotgageCalculator.Domain.Calculators.Implementation;
 using MotgageCalculator.Domain.Calculators.Interface;
 using MotgageCalculator.Domain.Factory;
 
-namespace MortgageCalculator
+namespace MortgageCalculator.Api
 {
     public class Startup
     {
@@ -21,17 +28,7 @@ namespace MortgageCalculator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddControllers();
-            services.AddMvcCore();
-            // Add AddRazorPages if the app uses Razor Pages.
-            // services.AddRazorPages();
-
-            // In production, the Vue files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/dist";
-            //});
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSingleton<ICalculatorFactory, CalcualtorFactory>();
             services.AddScoped<ICalculator, MortgagePropertyCalculator>();
             services.AddCors(x => x.AddDefaultPolicy(builder =>
@@ -39,7 +36,6 @@ namespace MortgageCalculator
                 builder.WithOrigins("http://localhost:8080/",
                                     "http://www.contoso.com");
             }));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,28 +45,18 @@ namespace MortgageCalculator
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-                app.UseHttpsRedirection();
-            }
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-            app.UseStaticFiles();
-            //app.UseSpaStaticFiles();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "ClientApp";
-            //});
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
         }
     }
 }

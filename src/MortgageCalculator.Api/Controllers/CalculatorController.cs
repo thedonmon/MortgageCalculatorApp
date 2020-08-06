@@ -22,7 +22,7 @@ namespace MortgageCalculator.Api.Controllers
 
         [HttpPost]
         [Route("calculateMortgage")]
-        public async Task<IActionResult> CalcMortgageAsync(MortgageCalculationRequest request)
+        public async Task<IActionResult> CalcMortgageAsync([FromBody]MortgageCalculationRequest request)
         {
             try
             {
